@@ -1,0 +1,24 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  # generate-ddl 과 hibernate.ddl-auto 의 차이점을 아는것은 중요하다.
+  # generate-ddl 은 jpa의 하위속성으로 실제 구현체와 상관없이 자동화된 ddl을 사용할 수 있도록 하는 설정
+  # ddl-auto가 설정이되면 generate-ddl이 무시됨. ( ddl-auto가 더 세부 option이기 때문이다. )
+  # generate-ddl : false 가 default. EmbeddedDB는 generate-ddl : false가 ddle-auto: create-drop으로 동작함.
+  # 아래 설정을 통해서 dialect가 변경 됨 >HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/book_manager
+    username: root
+    password: pass991!
+    initialization-mode: always
+    #운영데이터의 경우는 initialization-mode: none을 명시적으로 선언해주는게 좋다.
+    #initialization-mode: always 설정시 schema.sql이 있으면 ddl-auto는 무시됨 ( initailization-mode의 우선순위가 더 높음 )
